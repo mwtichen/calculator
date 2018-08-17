@@ -1,0 +1,146 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Simple Calculator</title>
+</head>
+<body>
+  <div>
+    <div>
+      <p id="display">0</p>
+    </div>
+    <div class="btn">
+      <button>0</button>
+      <button>1</button>
+      <button>2</button>
+      <button>3</button>
+      <button>4</button>
+      <button>5</button>
+      <button>6</button>
+      <button>7</button>
+      <button>8</button>
+      <button>9</button>
+      <button id="period">.</button>
+      <button>+</button>
+      <button>-</button>
+      <button>*</button>
+      <button>/</button>
+      <button id="equal">=</button>
+      <button id="clear">clear</button>
+    </div>
+  </div>
+ <script>
+ //code
+ function add(x,y) {
+   return x + y;
+ }
+
+ function subtract(x,y) {
+   return x - y;
+ }
+
+ function multiply(x,y) {
+   return x * y;
+ }
+
+ function divide(x,y) {
+   return x / y;
+ }
+
+ function operate(operator,x,y) {
+   if(operator === "+") {
+     return add(x,y);
+   } else if (operator === "-") {
+     return subtract(x,y);
+   } else if (operator === "*") {
+     return multiply(x,y);
+   } else if (operator === "/") {
+     return divide(x,y);
+   } else {
+     return "ERROR: INVALID OPERATOR";
+   }
+ }
+
+//need to check for multiple decimals
+//and disable the period
+
+//simplify this
+// create a function called operateOnString
+function operateOnString(str) {
+  let operatorIndex = str.search(/[\+\-\/\*]/g);
+  let operator = str.charAt(operatorIndex);
+  let firstNumber = parseFloat(str.slice(0,operatorIndex));
+  let secondNumber = parseFloat(str.slice(operatorIndex + 1));
+  return operate(operator,firstNumber,secondNumber);
+}
+
+
+//need to consider decimal points
+function operateInOrder(str) {
+  let newStr = "";
+  let answer = "";
+
+  while (str.search(/\d+\.*\d*[\*\/]\d+\.*\d*/g) !== -1) {
+    newStr = str.match(/\d+\.*\d*[\*\/]\d+\.*\d*/g)[0];
+    answer = operateOnString(newStr);
+    str = str.replace(newStr,answer.toString());
+  }
+
+  while (str.search(/\d+\.*\d*[\+\-]\d+\.*\d*/g) !== -1) {
+    newStr = str.match(/\d+\.*\d*[\+\-]\d+\.*\d*/g)[0]
+    answer = operateOnString(newStr);
+    str = str.replace(newStr,answer.toString());
+  }
+
+  return str;
+}
+
+
+const display = document.querySelector("#display");
+
+let displayValue = display.textContent;
+
+const equalBtn = document.querySelector("#equal");
+
+equalBtn.addEventListener('click', (e) => {
+  //stop the event from bubbling up
+  e.stopPropagation();
+  let answer = operateInOrder(displayValue);
+  if (answer === "Infinity") {
+    display.textContent = "Infinity is not a real number...";
+    displayValue = answer;
+    return;
+  }
+  display.textContent = answer
+  displayValue = answer;
+});
+
+const clearBtn = document.querySelector("#clear");
+
+clearBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  display.textContent = "0";
+  displayValue = "0";
+});
+
+let btn = document.querySelector('.btn');
+btn.addEventListener('click', (e) => {
+  if (e.target.textContent.length > 1) {
+    //do nothing if they click on space in between buttons
+  } else {
+    // if displayValue contains 2 periods in between */+-
+    // then do nothing
+    if ( (display.textContent + e.target.textContent).split(/[\+\-\*\/]/g).some( (seq) => {
+      return seq.split(".").length > 2 })) {
+      console.log("hit");
+    } else {
+      display.textContent += e.target.textContent;
+      displayValue = display.textContent;
+    }
+  }
+  console.log(displayValue);
+});
+
+
+ </script>
+</body>
+</html>
