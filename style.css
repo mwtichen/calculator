@@ -1,0 +1,47 @@
+button {
+  margin: 20px 20px 20px 20px;
+}
+
+#display {
+  background-color: black;
+  color: white;
+  font-family: courier;
+  font-size: 24px;
+  text-align: right;
+  padding: 5px;
+}
+
+#displayBox {
+  border: 2px solid gray;
+  width: 200px;
+  background-color: black;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 17px;
+}
+
+#outerDisplayBox {
+  border: 2px solid gray;
+  width: 250px;
+  height: 120px;
+  margin-left: 100px;
+  margin-top: 50px;
+  background-color: Lightgray;
+  border-radius: 5px;
+}
+
+.btn {
+  border: 2px solid gray;
+  width: 250px;
+  margin-left: 100px;
+  background-color: Lightgray;
+  border-radius: 5px;
+}
+
+#equal {
+  margin-left: 50px;
+}
+
+#clear {
+  margin-right: 25px;
+}
