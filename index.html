@@ -93,8 +93,10 @@ function operateInOrder(str) {
     answer = operateOnString(newStr);
     str = str.replace(newStr,answer.toString());
   }
-
-  return str;
+  //rounds the answer to 3 decimal places
+  str = parseFloat(str);
+  str = Math.round(str * 1000) / 1000;
+  return str.toString();
 }
 
 
